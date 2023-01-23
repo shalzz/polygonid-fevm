@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, config } from "hardhat";
 import fs from "fs";
 import path from "path";
 const pathOutputJson = path.join(
@@ -6,13 +6,45 @@ const pathOutputJson = path.join(
   "./deploy_erc20verifier_output.json"
 );
 
-async function main() {
+import util from "util";
+const request = util.promisify(require("request"))
 
+async function callRpc(method, params = undefined) {
+    var options = {
+        method: "POST",
+        url: "https://api.hyperspace.node.glif.io/rpc/v1",
+        // url: "http://localhost:1234/rpc/v0",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            jsonrpc: "2.0",
+            method: method,
+            params: params,
+            id: 1,
+        }),
+    }
+    const res = await request(options)
+    return JSON.parse(res.body).result
+}
+
+async function main() {
+  const priorityFee = await callRpc("eth_maxPriorityFeePerGas")
+  const FEE_DATA = {
+    maxFeePerGas:         ethers.utils.parseUnits('50', 'gwei'),
+    maxPriorityFeePerGas: priorityFee,
+    lastBaseFeePerGas: null,
+    gasPrice: null,
+  };
+
+  const provider = new ethers.providers.FallbackProvider([ethers.provider], 1);
+  provider.getFeeData = async () => FEE_DATA ;
+  const deployer = new ethers.Wallet(config.networks["hyperspace"].accounts[0]).connect(provider)
 
   const contractName ="ERC20Verifier"
   const name = "ERC20ZKPVerifier";
   const symbol = "ERCZKP";
-  const ERC20ContractFactory = await ethers.getContractFactory(contractName);
+  const ERC20ContractFactory = await ethers.getContractFactory(contractName, deployer);
   const erc20instance = await ERC20ContractFactory.deploy(
     name,
     symbol
@@ -27,7 +59,6 @@ async function main() {
   // mtp:validator: 0x217Ca85588293Fb845daBCD6385Ebf9877fAF649   // current mtp validator address on mumbai
   // sig:validator: 0xb1e86C4c687B85520eF4fd2a0d14e81970a15aFB   // current sig validator address on mumbai
   const validatorAddress = "0x217Ca85588293Fb845daBCD6385Ebf9877fAF649";
-
 
   const ageQuery = {
     schema: ethers.BigNumber.from("210459579859058135404770043788028292398"),

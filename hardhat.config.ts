@@ -6,6 +6,9 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-etherscan";
+require("dotenv").config()
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY
 
 const DEFAULT_MNEMONIC =
   "test test test test test test test test test test test junk";
@@ -40,12 +43,12 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  defaultNetwork: "hyperspace",
   networks: {
-    //
-    mumbai: {
-        chainId: 80001,
-        url: "url here",
-        accounts: ["key here"],
+    hyperspace: {
+        chainId: 3141,
+        url: "https://api.hyperspace.node.glif.io/rpc/v1",
+        accounts: [PRIVATE_KEY!],
     },
     localhost: {
       url: "http://127.0.0.1:8545",
