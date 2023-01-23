@@ -9,7 +9,8 @@ const request = util.promisify(require("request"))
 async function callRpc(method, params = undefined) {
     var options = {
         method: "POST",
-        url: "https://api.hyperspace.node.glif.io/rpc/v1",
+        url: config.networks[config.defaultNetwork].url,
+        // url: "https://api.hyperspace.node.glif.io/rpc/v1",
         // url: "http://localhost:1234/rpc/v0",
         headers: {
             "Content-Type": "application/json",
@@ -40,7 +41,7 @@ async function main() {
 
   const provider = new ethers.providers.FallbackProvider([ethers.provider], 1);
   provider.getFeeData = async () => FEE_DATA ;
-  const deployer = new ethers.Wallet(config.networks["hyperspace"].accounts[0]).connect(provider)
+  const deployer = new ethers.Wallet(config.networks[config.defaultNetwork].accounts[0]).connect(provider)
 
   const VerifierMTPWrapper = await ethers.getContractFactory(
     verifierContractWrapperName, deployer

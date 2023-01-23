@@ -50,6 +50,11 @@ const config: HardhatUserConfig = {
         url: "https://api.hyperspace.node.glif.io/rpc/v1",
         accounts: [PRIVATE_KEY!],
     },
+    wallaby: {
+        chainId: 31415,
+        url: "https://wallaby.node.glif.io/rpc/v0",
+        accounts: [PRIVATE_KEY!],
+    },
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: {

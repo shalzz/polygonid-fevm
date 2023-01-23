@@ -1,4 +1,25 @@
-import { ethers, upgrades } from "hardhat";
+import { ethers, upgrades, config } from "hardhat";
+import util from "util";
+const request = util.promisify(require("request"))
+
+async function callRpc(method, params = undefined) {
+    var options = {
+        method: "POST",
+        url: "https://api.hyperspace.node.glif.io/rpc/v1",
+        // url: "http://localhost:1234/rpc/v0",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            jsonrpc: "2.0",
+            method: method,
+            params: params,
+            id: 1,
+        }),
+    }
+    const res = await request(options)
+    return JSON.parse(res.body).result
+}
 
 export async function deployValidatorContracts(
   verifierContractWrapperName: string,
@@ -7,14 +28,26 @@ export async function deployValidatorContracts(
   state: any;
   validator: any;
 }> {
-  const StateVerifier = await ethers.getContractFactory("Verifier");
+  const priorityFee = await callRpc("eth_maxPriorityFeePerGas")
+  const FEE_DATA = {
+    maxFeePerGas:         ethers.utils.parseUnits('50', 'gwei'),
+    maxPriorityFeePerGas: priorityFee,
+    lastBaseFeePerGas: null,
+    gasPrice: null,
+  };
+
+  const provider = new ethers.providers.FallbackProvider([ethers.provider], 1);
+  provider.getFeeData = async () => FEE_DATA ;
+  const deployer = new ethers.Wallet(config.networks["hyperspace"].accounts[0]).connect(provider)
+
+  const StateVerifier = await ethers.getContractFactory("Verifier", deployer);
   const stateVerifier = await StateVerifier.deploy();
 
   await stateVerifier.deployed();
   console.log("State Verifier deployed to:", stateVerifier.address);
 
   const ValidatorContractVerifierWrapper = await ethers.getContractFactory(
-    verifierContractWrapperName
+    verifierContractWrapperName, deployer
   );
   const validatorContractVerifierWrapper =
     await ValidatorContractVerifierWrapper.deploy();
@@ -25,7 +58,7 @@ export async function deployValidatorContracts(
     validatorContractVerifierWrapper.address
   );
 
-  const State = await ethers.getContractFactory("State");
+  const State = await ethers.getContractFactory("State", deployer);
   const state = await upgrades.deployProxy(State, [stateVerifier.address]);
 
   await state.deployed();
@@ -33,7 +66,7 @@ export async function deployValidatorContracts(
   console.log("State deployed to:", state.address);
 
   const ValidatorContract = await ethers.getContractFactory(
-    validatorContractName
+    validatorContractName, deployer
   );
 
   const validatorContractProxy = await upgrades.deployProxy(ValidatorContract, [
@@ -58,7 +91,19 @@ export async function deployERC20ZKPVerifierToken(
 ): Promise<{
   address: string;
 }> {
-  const ERC20Verifier = await ethers.getContractFactory("ERC20Verifier");
+  const priorityFee = await callRpc("eth_maxPriorityFeePerGas")
+  const FEE_DATA = {
+    maxFeePerGas:         ethers.utils.parseUnits('50', 'gwei'),
+    maxPriorityFeePerGas: priorityFee,
+    lastBaseFeePerGas: null,
+    gasPrice: null,
+  };
+
+  const provider = new ethers.providers.FallbackProvider([ethers.provider], 1);
+  provider.getFeeData = async () => FEE_DATA ;
+  const deployer = new ethers.Wallet(config.networks["hyperspace"].accounts[0]).connect(provider)
+
+  const ERC20Verifier = await ethers.getContractFactory("ERC20Verifier", deployer);
   const erc20Verifier = await ERC20Verifier.deploy(name, symbol);
 
   await erc20Verifier.deployed();
