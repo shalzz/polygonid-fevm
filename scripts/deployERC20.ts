@@ -56,9 +56,9 @@ async function main() {
   // set default query
   const circuitId = "credentialAtomicQueryMTP"; //"credentialAtomicQueryMTP";
 
-  // mtp:validator: 0x217Ca85588293Fb845daBCD6385Ebf9877fAF649   // current mtp validator address on mumbai
-  // sig:validator: 0xb1e86C4c687B85520eF4fd2a0d14e81970a15aFB   // current sig validator address on mumbai
-  const validatorAddress = "0x217Ca85588293Fb845daBCD6385Ebf9877fAF649";
+  // mtp:validator: 0x845fEb2fb68D5857e2447C474AD5fcaf29d91197   // current mtp validator address on hyperspace
+  // sig:validator: 0x2aF149a52314eF434501DDD752A22de824202FD0   // current sig validator address on hyperspace
+  const validatorAddress = "0x2aF149a52314eF434501DDD752A22de824202FD0";
 
   const ageQuery = {
     schema: ethers.BigNumber.from("210459579859058135404770043788028292398"),
