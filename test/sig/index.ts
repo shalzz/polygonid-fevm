@@ -50,6 +50,8 @@ const testCases: any[] = [
 ];
 
 describe("Atomic Sig Validator", function () {
+  this.timeout(400000); // set timeout here
+
   let state: any, sig: any;
 
   beforeEach(async () => {

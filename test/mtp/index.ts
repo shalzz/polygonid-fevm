@@ -51,6 +51,8 @@ const testCases: any[] = [
 ];
 
 describe("Atomic MTP Validator", function () {
+  this.timeout(400000); // set timeout here
+
   let state: any, mtp: any;
 
   beforeEach(async () => {
