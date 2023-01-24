@@ -15,9 +15,11 @@ Also, it contains the example of ERC20 based smart contract with enabled zkp ver
 ### Contracts
 
 #### Hyperspace
+StateV1: [0x3E5A1dec88f22b0beb8BdDf5a6460360C2DcAd1B](https://fvm.starboard.ventures/contracts/0x3E5A1dec88f22b0beb8BdDf5a6460360C2DcAd1B)
 MTPValidator: [0x2c851D061277527503EB444CE43FAc1DF4e2bbc9](https://explorer.glif.io/address/0x2c851D061277527503EB444CE43FAc1DF4e2bbc9/?network=hyperspacenet)
 
 SigValidator: [0x2c851D061277527503EB444CE43FAc1DF4e2bbc9](https://explorer.glif.io/address/0x2c851D061277527503EB444CE43FAc1DF4e2bbc9/?network=hyperspacenet)
+
 
 Current addresses on Polygon Mumbai testnet.
 

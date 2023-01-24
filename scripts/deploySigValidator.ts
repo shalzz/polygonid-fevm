@@ -36,7 +36,7 @@ async function main() {
     gasPrice: null,
   };
 
-  const stateAddress = "0x46Fd04eEa588a3EA7e9F055dd691C688c4148ab3"; // current iden3 state smart contract
+  const stateAddress = "0x3E5A1dec88f22b0beb8BdDf5a6460360C2DcAd1B"; // current iden3 state smart contract
   const verifierContractWrapperName = "VerifierSigWrapper";
   const validatorContractName = "CredentialAtomicQuerySigValidator";
 
