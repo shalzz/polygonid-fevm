@@ -30,7 +30,7 @@ async function callRpc(method, params = undefined) {
 async function main() {
   const priorityFee = await callRpc("eth_maxPriorityFeePerGas")
   const FEE_DATA = {
-    maxFeePerGas:         ethers.utils.parseUnits('50', 'gwei'),
+    maxFeePerGas:         ethers.utils.parseUnits('10', 'gwei'),
     maxPriorityFeePerGas: priorityFee,
     lastBaseFeePerGas: null,
     gasPrice: null,

@@ -31,7 +31,7 @@ async function callRpc(method, params = undefined) {
 async function main() {
   const priorityFee = await callRpc("eth_maxPriorityFeePerGas")
   const FEE_DATA = {
-    maxFeePerGas:         ethers.utils.parseUnits('50', 'gwei'),
+    maxFeePerGas:         ethers.utils.parseUnits('10', 'gwei'),
     maxPriorityFeePerGas: priorityFee,
     lastBaseFeePerGas: null,
     gasPrice: null,
@@ -60,8 +60,11 @@ async function main() {
   // sig:validator: 0x2aF149a52314eF434501DDD752A22de824202FD0   // current sig validator address on hyperspace
   const validatorAddress = "0x2aF149a52314eF434501DDD752A22de824202FD0";
 
+  const schemaHash = "88b696448270329a88f795b7197bc7fa";
+  const schemaEnd = fromLittleEndian(hexToBytes(schemaHash));
+
   const ageQuery = {
-    schema: ethers.BigNumber.from("210459579859058135404770043788028292398"),
+    schema: ethers.BigNumber.from(schemaEnd),
     slotIndex: 2,
     operator: 2,
     value: [20020101, ...new Array(63).fill(0).map(i => 0)],
@@ -94,3 +97,21 @@ main()
     console.error(error);
     process.exit(1);
   });
+
+function hexToBytes(hex) {
+    var bytes, c;
+    for (bytes = [], c = 0; c < hex.length; c += 2)
+        bytes.push(parseInt(hex.substr(c, 2), 16));
+    return bytes;
+}
+
+function fromLittleEndian(bytes) {
+    const n256 = BigInt(256);
+    let result = BigInt(0);
+    let base = BigInt(1);
+    bytes.forEach((byte) => {
+      result += base * BigInt(byte);
+      base = base * n256;
+    });
+    return result;
+  }
