@@ -16,18 +16,12 @@ Also, it contains the example of ERC20 based smart contract with enabled zkp ver
 
 #### FEVM Hyperspace Testnet
 StateV1: [0x3E5A1dec88f22b0beb8BdDf5a6460360C2DcAd1B](https://fvm.starboard.ventures/contracts/0x3E5A1dec88f22b0beb8BdDf5a6460360C2DcAd1B)
-MTPValidator: [0x845fEb2fb68D5857e2447C474AD5fcaf29d91197](https://explorer.glif.io/address/0x845fEb2fb68D5857e2447C474AD5fcaf29d91197/?network=hyperspacenet)
 
-SigValidator: [0x2aF149a52314eF434501DDD752A22de824202FD0](https://explorer.glif.io/address/0x2aF149a52314eF434501DDD752A22de824202FD0/?network=hyperspacenet)
+MTPValidator: [0x845fEb2fb68D5857e2447C474AD5fcaf29d91197](https://fvm.starboard.ventures/contracts/0x845fEb2fb68D5857e2447C474AD5fcaf29d91197/?network=hyperspacenet)
 
-|                    |                    Sig                   |                    MTP                     |
-|:------------------:|:------------------------------------------:|:------------------------------------------:|
-| **ERC20 examples** | 0xC5695C13324CaEAFB4D231372Dfd5e38f42CD754 | 0x0000000000000000000000000000000000000000 |
-| **ERC20 with custom schema** | 0xeF39043d21B588961C20D468D7aF2cA3bacD2920 | 0x0000000000000000000000000000000000000000 |
+SigValidator: [0x2aF149a52314eF434501DDD752A22de824202FD0](https://fvm.starboard.ventures/contracts/0x2aF149a52314eF434501DDD752A22de824202FD0/?network=hyperspacenet)
 
-
-0xeF39043d21B588961C20D468D7aF2cA3bacD2920
-
+ERC20Verifier: [0xeF39043d21B588961C20D468D7aF2cA3bacD2920](https://fvm.starboard.ventures/contracts/0xeF39043d21B588961C20D468D7aF2cA3bacD2920/?network=hyperspacenet)
 
 #### Polygon Mumbai Testnet.
 
